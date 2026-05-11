@@ -1,0 +1,30 @@
+name: Build Readme
+
+on:
+  push:
+    paths:
+      - 'README.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source File
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+      
+      - name: Install pandoc
+        run: sudo apt update && sudo apt install -y pandoc
+      
+      - name: Generate index.html
+        run: pandoc README.md -o index.html -s
+      
+      - name: Commit and Push HTML
+        run: |
+          git config user.name "Phiarc Actions"
+          git config user.email "gh_actions_repos@phiarc.org"
+          git add index.html
+          git commit -m "docs(index): [BOT] Automatically generate readme"
+          git push
