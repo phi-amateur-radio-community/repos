@@ -19,7 +19,7 @@ jobs:
         run: sudo apt update && sudo apt install -y pandoc
       
       - name: Generate index.html
-        run: pandoc README.md -o index.html -s --css github-markdown.css
+        run: pandoc README.md -o index.html -s --css github-markdown.css --template template.html
       
       - name: Commit and Push HTML
         run: |
